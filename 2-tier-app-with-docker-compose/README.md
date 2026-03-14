@@ -118,6 +118,19 @@ docker compose down --volumes --rmi all
 
 ---
 
+## 💡 Commonly Used Docker Compose Commands
+
+- `docker compose -f docker-compose.yml up -d` 
+  *(if you have multiple compose files, i.e., `compose.yaml`, `docker-compose.yaml`)*
+
+- `docker compose up --build -d` 
+  *(if you make changes to the app, re-build and run)*
+
+- `docker compose down --volumes --rmi all`
+  *(full cleanup to stop and remove containers, networks, volumes, and images)*
+
+---
+
 ## 📂 Project Structure
 
 A quick glance at what makes this application tick:
