@@ -1,0 +1,38 @@
+# Stage 1: Build Stage Full
+FROM python:3.9-slim AS builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy only the requirements file (if available)
+COPY requirements.txt .
+
+# Install dependencies in a virtual environment
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Or, RUN pip install --no-cache-dir --user -r requirements.txt
+# when you add "--no-cache-dir", it tells pip not to store downloaded packages in its local cache
+# Pip installs everything directly, then discards the wheel files.
+# No ~/.cache/pip directory is created. The Docker layer stays clean and smaller. That's a 30–50% reduction in image size - just from one flag.
+
+
+# Now copy all source files (including app.py) from My (computer) Filesystem to container Filesystem
+COPY . .
+
+# Stage 2: Final Minimal Image
+FROM python:3.9-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy installed dependencies from the builder stage
+COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+
+# Copy the Flask app from builder
+COPY --from=builder /app /app
+
+# Expose port 5000 for Flask (It actually doesn't expose but for documentation purpose)
+EXPOSE 5000
+
+# Run the app
+CMD ["python", "app.py"]
