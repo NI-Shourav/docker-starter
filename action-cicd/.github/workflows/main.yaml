@@ -1,14 +1,12 @@
-# "DOCKER_USERNAME" > Changeable
-# "DOCKER_PASSWORD" > Changeable
-# "AWS_USER" > Changeable  
-# "AWS_HOST" > Changeable
-# "AWS_KEY" > Changeable
-# "flask-attendance-app" > Changeable
-# "app_network" > Changeable
-# "flask-app" > Changeable
-# "mysql-db" > Changeable 
-# "MYSQL_ROOT_PASSWORD" > Changeable
-# "MYSQL_DATABASE" > Changeable
+# "DOCKER_USERNAME" > Changable
+# "DOCKER_PASSWORD" > Changable
+# "AWS_USER" > Changable  
+# "AWS_HOST" > Changable
+# "AWS_KEY" > Changable
+# "flask-attendance-app" > Changable
+# "app_network" > Changable
+# "flask-app" > Changable
+# "mysql-db" > Changable 
 
 name: CI/CD for Flask App (Without Docker Compose)
 
@@ -64,6 +62,7 @@ jobs:
             docker run -d \
               --name mysql-db \
               --network app_network \
+              -v mysql_data:/var/lib/mysql \
               -e MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
               -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
               -p 3306:3306 \
